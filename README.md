@@ -2,11 +2,30 @@
 
 Courier COD payout reconciliation and dispute tracking for merchants and accountants.
 Compare orders, courier settlements and bank receipts, retain evidence behind differences,
-and track review through period close. Remittal does not hold or move funds.
+and track review through period close. Remittal does not hold or move merchants' COD funds.
+Its own software subscription fees are a separate money flow.
 
 This is a lightweight development foundation, not a working financial application.
 The homepage is a development placeholder. [AGENTS.md](AGENTS.md) contains product context,
 the planned stack, financial rules and maintained development guidance.
+
+## Billing plan (deferred implementation)
+
+First customers will receive invoices and pay into Remittal's business bank account by
+bank/Raast transfer. Confirm the actual bank credit manually before granting or renewing
+access. No payment gateway, billing SDK, checkout, subscription system or webhook is set
+up yet, and no provider credentials are needed for initialization.
+
+Choose online billing only after customer demand, merchant onboarding and payout
+eligibility are confirmed. Safepay, Lemon Squeezy and Paddle are candidates in the brief,
+not selected integrations; confirm their current official terms before evaluating them.
+Keep future SaaS billing records and access entitlements separate from courier COD
+reconciliation data. Manual invoice records will retain the invoice number, organization,
+amount/currency, due date, bank reference, confirmed receipt, approver and paid-through date.
+
+Email, backups/restore drills, retention, rate limits, upload scanning, monitoring and CI
+remain future production tasks. The initialization adds no dependencies or environment
+keys for these deferred services.
 
 ## Local development
 

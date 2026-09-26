@@ -14,11 +14,13 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 Remittal helps merchants reconcile courier COD payouts and track disputes to closure.
 The source is `Remittal_CLI_Build_Brief.pdf`. Explicit user scope takes precedence over
-the PDF's commands. Current milestone: lightweight initialization only. The homepage
+the PDF's commands. Current milestone: the lightweight foundation is initialized;
+feature development is next. The homepage
 is a user-edited placeholder at `app/(root)/page.tsx`; cloud integrations and the first
 vertical slice are not implemented.
 
-Remittal reads evidence and does not hold or move customer funds. The first pilot targets
+Remittal reads evidence and does not hold or move merchants' courier COD funds. Its own
+software fees are a separate billing flow. The first pilot targets
 one store, two courier report formats and one bank export for a real period.
 Planned flow: upload intent -> private S3 upload -> recorded evidence -> Trigger.dev
 streaming import -> immutable source rows and normalized Postgres records -> deterministic
@@ -30,6 +32,36 @@ timing differences, reviewer disputes and close exports. No part of this flow is
 Live courier/Shopify APIs, PDF/OCR, AI chat, labels, rider tracking, inventory, tax advice,
 payments, lending and autonomous dispute submission are later scope. Add XLSX only when
 real pilot samples justify it.
+
+## SaaS billing and operations
+
+The updated brief's page 5 and the user's instructions establish this phased approach:
+
+- First customers: issue invoices and accept payment into Remittal's business bank
+  account via verified bank/Raast transfer. Manually confirm the bank credit before
+  granting or renewing access. A screenshot or claimed transfer is not confirmation.
+  Quarterly prepay is a possible pilot arrangement, not an established pricing decision.
+- No billing implementation, payment SDK, checkout, webhook, provider account or billing
+  environment variables are initialized now. Choose an online provider only after customer
+  demand, merchant onboarding and payout eligibility are confirmed.
+- Safepay is a future local-checkout candidate; Lemon Squeezy or Paddle are future
+  international candidates, not selected providers. Recheck current official capabilities,
+  approval requirements and payout terms before choosing or integrating any provider.
+- Future manual billing records need invoice number, organization, amount/currency,
+  due date, bank reference, confirmed receipt, approver and paid-through date. Keep
+  plans/subscriptions/invoices/payment events/entitlements separate from courier
+  orders, settlements, bank evidence and reconciliation allocations.
+- When activated, authorize usage through server-side entitlements with a deliberate
+  grace-period/export policy. Online checkout will use hosted pages, verified webhook
+  signatures, unique event IDs and idempotent processing for renewals, failures,
+  cancellations and refunds. A browser success URL must never grant access by itself.
+  Remittal must not store card numbers or become the merchant's COD payment processor.
+- Transactional email/sending-domain verification, backups and restore drills, evidence
+  retention/deletion, upload limits/malware checks, rate limits, operational monitoring
+  and CI are future production work, not completed integrations.
+
+Use current official documentation for commands and APIs at the time of implementation;
+do not copy the brief's package commands or provider claims without checking applicability.
 
 ## Stack and organization
 
