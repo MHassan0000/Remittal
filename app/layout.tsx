@@ -1,15 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Commissioner, Familjen_Grotesk } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const commissioner = Commissioner({
   subsets: ["latin"],
+  variable: "--font-commissioner",
+  style: "normal",
+  display: "swap",
+  fallback: ["system-ui", "Segoe UI", "Arial", "Helvetica", "sans-serif"],
+  adjustFontFallback: true,
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const familjen = Familjen_Grotesk({
   subsets: ["latin"],
+  variable: "--font-familjen",
+  style: "normal",
+  display: "swap",
+  fallback: ["system-ui", "Segoe UI", "Arial", "Helvetica", "sans-serif"],
+  adjustFontFallback: true,
 });
 
 export const metadata: Metadata = {
@@ -21,9 +30,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${commissioner.variable} ${familjen.variable} dark h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

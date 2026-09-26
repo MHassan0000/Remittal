@@ -5,7 +5,7 @@ Compare orders, courier settlements and bank receipts, retain evidence behind di
 and track review through period close. Remittal does not hold or move funds.
 
 This is a lightweight development foundation, not a working financial application.
-The starter homepage remains. [AGENTS.md](AGENTS.md) contains product context,
+The homepage is a development placeholder. [AGENTS.md](AGENTS.md) contains product context,
 the planned stack, financial rules and maintained development guidance.
 
 ## Local development
@@ -37,14 +37,14 @@ Next.js server boundary protection. New dependencies are pinned to exact version
 shadcn/ui is initialized with `components.json`, neutral Base Nova theme tokens,
 `shadcn/tailwind.css` and `tw-animate-css`. TanStack React Table is installed for future
 financial grids. The `cn` package supports current shadcn-generated component imports;
-the existing `lib/utils.ts` helper remains available. System dark mode is preserved.
+the existing `lib/utils.ts` helper remains available. Dark/light themes are initialized.
 Add only the components needed for a screen:
 
 ```powershell
 npx shadcn add button
 ```
 
-No components or financial grids have been implemented yet.
+The existing shadcn button uses `@base-ui/react`; financial grids are not implemented yet.
 Neon/Drizzle, Better Auth, AWS SDKs, Trigger.dev, csv-parse, Sentry,
 Vitest and Playwright are deferred until their features need them.
 
@@ -93,3 +93,31 @@ No skills, custom agents or personal configuration are installed there.
 `eslint.config.mjs` (lint rules) came from the original Next.js scaffold and are retained.
 `lib/utils.ts` supplies the small `cn()` class-merging helper for future UI components.
 Update AGENTS.md and this README when architecture, setup or project state changes.
+
+## Typography
+
+Familjen Grotesk is the wordmark/major-heading font (`font-display`, automatically on
+`h1`/`h2`). Commissioner is the default for body text, forms, dashboard UI and tables
+(`font-sans`). Use `tabular-nums` for aligned financial amounts and `font-mono` for code/IDs.
+
+Both use `next/font/google` with Latin subsets and variable weights. Next.js fetches
+and self-hosts the fonts during builds, which need Google Fonts access. Browsers load
+the font assets from this app. No separate font packages are required.
+`font-display: swap` shows fallback text during loading;
+system UI fonts, Segoe UI, Arial, Helvetica and sans-serif cover loading or failed requests.
+
+## Themes
+
+Dark is the default. `next-themes` manages the HTML class and saves the selected light
+or dark theme in localStorage under `remittal-theme`. OS preference does not override
+the chosen theme. The provider lives in `components/theme-provider.tsx` and its boot
+script applies a saved choice before hydration. Native controls follow `color-scheme`.
+
+The existing neutral CSS tokens are provisional. Customize `:root` for light and `.dark`
+for dark in `app/globals.css` when the design palette is selected. Prefer semantic
+classes (`bg-background`, `text-foreground`, `bg-card`, `border-border`) across screens;
+Tailwind `dark:` also follows the selected class.
+
+No visible switch is added yet. Future Client Components can call
+`useTheme().setTheme("light")` or `setTheme("dark")` from `next-themes`. Render
+theme-dependent controls after mounting to avoid hydration mismatches.
